@@ -146,7 +146,7 @@ bangsounds = read_dir()
 # alphabetically sorted buttons in array
 bangbuttons = sorted(bangsounds, key=lambda key: bangsounds[key])
 # add custom buttons, e.g. for timelimit, stoptimelimit and stopsound
-bangbuttons += ['timelimit', 'stoptime', 'stopsound']
+bangbuttons += ['timelimit', 'stoptime', 'stopsound','nextplayer']
 nbuttons = len(bangbuttons)
 
 # GAME WINDOW
@@ -355,6 +355,8 @@ while True:
                         timelimit = True
                     elif cbutton == 'stoptime':
                         timelimit = False
+                    elif cbutton == 'nextplayer':
+		        queue_sound('speech/end_of_line.wav')
                     else:
 			queue_sound(random_sound(cbutton))
                 except Exception as e:
