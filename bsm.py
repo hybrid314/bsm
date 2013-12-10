@@ -74,7 +74,7 @@ K_t: 'treffer', \
 K_v: 'verwirrung', \
 }
 
-# timelimit for player's move. This is invoked, if "nextplayer" button is pressed
+# timelimit for player's move. This is invoked, if "timelimit" button is pressed
 # speech announces 30, 20, 10, 5, 4, 3, 2, 1 seconds till end
 player_timelimit = 30
 
@@ -84,7 +84,7 @@ def read_dir():
     print "Reading directories..."
     for dname, dnames, fnames in os.walk('.'):
         dname = re.sub('.*/','',dname)
-        if dname != '.' and dname != 'ambiente' and dname != 'speech' and dname != 'nextplayer' and dname != 'stopsound':
+        if dname != '.' and dname != 'ambiente' and dname != 'speech':
             soundfiles = []
             for ext in sndfile_extensions:
                 soundfiles += glob.glob(dname + '/' + '*.' + ext)
@@ -145,8 +145,8 @@ def buttoncaption(buttonname):
 bangsounds = read_dir()
 # alphabetically sorted buttons in array
 bangbuttons = sorted(bangsounds, key=lambda key: bangsounds[key])
-# add two buttons for nextplayer and stopsound
-bangbuttons += ['nextplayer', 'stopsound']
+# add custom buttons, e.g. for timelimit, stoptimelimit and stopsound
+bangbuttons += ['timelimit', 'stoptime', 'stopsound']
 nbuttons = len(bangbuttons)
 
 # GAME WINDOW
@@ -350,10 +350,13 @@ while True:
                     if cbutton == 'stopsound':
                         pygame.mixer.fadeout(1000)
                     # start player timer
-                    elif cbutton == 'nextplayer':
+                    elif cbutton == 'timelimit':
                         seconds = 0
                         timelimit = True
-                    queue_sound(random_sound(cbutton))
+                    elif cbutton == 'stoptime':
+                        timelimit = False
+                    else:
+			queue_sound(random_sound(cbutton))
                 except Exception as e:
                     pygame.mixer.fadeout(2000)
                 
